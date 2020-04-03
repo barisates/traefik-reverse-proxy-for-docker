@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  traefik:
+    network_mode: web
+    container_name: traefik
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml
+      - ./certs:/certs
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      - traefik.frontend.rule=Host:monitor.yourdomain.com
+      - traefik.port=8080
+    image: traefik:1.7.2-alpine
