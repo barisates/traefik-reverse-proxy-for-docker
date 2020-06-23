@@ -14,17 +14,19 @@ Yeni oluşturduğumuz Docker Network'ümüzü güvenlik duvarı üzerinden yapı
 
 - Yeni oluşturduğumuz Docker Network'ümüzün VPS üzerindeki Connection DEVICE bilgisine erişmemiz gerekiyor. Docker Network'lerini listeliyoruz.
 
-> ```
+```
 docker network ls
 ```
+
 [![](http://barisates.com/git/traefik/network-ls.png)](http://barisates.com/git/traefik/network-ls.png)
 Buradaki NETWORK_ID bilgisi ile VPS üzerindeki network bağlantılarımızı karşılaştırarak doğru bağlantıya yetkilendirme yapacağız.
 
 - Daha sonra VPS üzerindeki network bağlantıları listeliyoruz.
 
->  ```
+```
 nmcli connection show
 ```
+
 [![](http://barisates.com/git/traefik/network-connection.png)](http://barisates.com/git/traefik/network-connection.png)
 DEVICE alanındaki değer ile bağlantımıza güvenlik duvarı üzerinden yetkilendirme yapacağız.
 
