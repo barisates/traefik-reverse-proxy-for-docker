@@ -1,5 +1,6 @@
 # traefik-reverse-proxy-for-docker
-Using Traefik as a reverse proxy for Docker Containers.
+
+Traefik'i Docker Container'lar için ters proxy olarak kullanma.
 
 
 ### Network
