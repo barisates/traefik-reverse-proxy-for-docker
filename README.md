@@ -20,6 +20,7 @@ docker network ls
 ```
 
 [![](http://barisates.com/git/traefik/network-ls.png)](http://barisates.com/git/traefik/network-ls.png)
+
 Buradaki NETWORK_ID bilgisi ile VPS üzerindeki network bağlantılarımızı karşılaştırarak doğru bağlantıya yetkilendirme yapacağız.
 
 - Daha sonra VPS üzerindeki network bağlantıları listeliyoruz.
@@ -29,9 +30,10 @@ nmcli connection show
 ```
 
 [![](http://barisates.com/git/traefik/network-connection.png)](http://barisates.com/git/traefik/network-connection.png)
+
 DEVICE alanındaki değer ile bağlantımıza güvenlik duvarı üzerinden yetkilendirme yapacağız.
 
-- Firewall üzerinden yeni oluşturduğumuz Docker Network'üne yetki yanımlıyoruz.
+- Firewall üzerinden yeni oluşturduğumuz Docker Network'üne yetki tanımlıyoruz.
 
  ```
 firewall-cmd --permanent --zone=trusted --change-interface=br-ff48477ab8a4
@@ -162,10 +164,28 @@ docker run -d \
   traefik
 ```
 
-Artık aynı VPS üzerinde çalışan Docker konteynırlarınızı, SSL desteği ile birlikte barındırabilirsiniz. Örnek olarak bir uygulamayı yayına alalım;
+**Artık aynı VPS üzerinde çalışan Docker konteynırlarınızı, SSL desteği ile birlikte barındırabilirsiniz. Örnek olarak bir uygulamayı yayına alalım;**
 
+```yml
+version: "3"
 
+services:
+  your-project-name:
+    image: registry.yourdomain.com/your-project:latest
+    network_mode: web
+    container_name: your-project-name
+    restart: always
+    labels:
+      - traefik.backend=your-project-name
+      - traefik.frontend.rule=Host:api.yourdomain.com
+      - traefik.docker.network=web
+      - traefik.port=80
+```
 
-https://www.digitalocean.com/community/tutorials/how-to-use-traefik-as-a-reverse-proxy-for-docker-containers-on-ubuntu-18-04
-https://medium.com/@xavier.priour/secure-traefik-dashboard-with-https-and-password-in-docker-5b657e2aa15f
-https://hostingcanada.org/htpasswd-generator/
+Yukarıdaki şekilde bir ayarlama ile uygulamalarınızı Traefik ile yayına alabilirsiniz.
+
+- https://www.digitalocean.com/community/tutorials/how-to-use-traefik-as-a-reverse-proxy-for-docker-containers-on-ubuntu-18-04
+
+- https://medium.com/@xavier.priour/secure-traefik-dashboard-with-https-and-password-in-docker-5b657e2aa15f
+
+- https://hostingcanada.org/htpasswd-generator/
