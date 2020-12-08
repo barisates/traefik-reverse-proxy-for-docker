@@ -161,7 +161,7 @@ docker run -d \
   -l traefik.port=8080 \
   --network web \
   --name traefik \
-  traefik
+  traefik:1.7.2-alpine
 ```
 
 **Artık aynı VPS üzerinde çalışan Docker konteynırlarınızı, SSL desteği ile birlikte barındırabilirsiniz. Örnek olarak bir uygulamayı yayına alalım;**
